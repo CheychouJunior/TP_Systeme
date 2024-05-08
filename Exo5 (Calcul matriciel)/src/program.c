@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "type.h"
-#include "matrix.h"
+#include <type.h>
+#include <matrix.h>
 
 
 float **fillTab(int ligne, int colonne){
