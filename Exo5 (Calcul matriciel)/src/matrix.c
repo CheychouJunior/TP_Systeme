@@ -11,6 +11,8 @@ matrice* Transposer(matrice mat){
     for(int i=0; i<l; i++)
         for(int j=0; j<c; j++)
             A->tab[j][i] = mat.tab[i][j];
+
+    return A;
 }
 
 
@@ -83,4 +85,5 @@ matrice* Multiplier(matrice matA, matrice matB){
                 A->tab[i][j] += (matA.tab[i][k] * matB.tab[k][j]); 
         }
     }
+    return A;
 }
