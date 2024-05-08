@@ -5,7 +5,7 @@ EXEC = program
 
 all : $(EXEC)
 
-$(EXEC) : type.o matrix.o main.o
+$(EXEC) : type.o matrix.o program.o
 	$(CC) -o ./bin/$(EXEC) ./obj/*.o
 
 type.o : ./src/type.c
@@ -14,8 +14,8 @@ type.o : ./src/type.c
 matrix.o : ./src/matrix.c
 	$(CC) $(CFLAGS) ./src/matrix.c -o ./obj/type.o -I ./include
 
-main.o : ./src/main.c
-	$(CC) $(CFLAGS) ./src/main.c -o ./obj/type.o -I ./include
+program.o : ./src/main.c
+	$(CC) $(CFLAGS) ./src/program.c -o ./obj/program.o -I ./include
 
 run :
 	./bin/$(EXEC)
