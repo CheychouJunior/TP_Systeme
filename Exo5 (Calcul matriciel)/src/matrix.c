@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "matrix.h"
-#include "type.h"
+#include <type.h>
+#include <matrix.h>
 
 //------------ Fonction pour calculer la transposee d'une matrice ------------------------
 matrice* Transposer(matrice mat){
