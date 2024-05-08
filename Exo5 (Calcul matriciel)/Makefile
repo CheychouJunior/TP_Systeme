@@ -12,10 +12,10 @@ type.o : ./src/type.c
 	$(CC) $(CFLAGS) ./src/type.c -o ./obj/type.o -I ./include
 
 matrix.o : ./src/matrix.c
-	$(CC) $(CFLAGS) ./src/matrix.c -o ./obj/type.o -I ./include
+	$(CC) $(CFLAGS) ./src/matrix.c -o ./obj/matrix.o -I ./include
 
-program.o : ./src/main.c
-	$(CC) $(CFLAGS) ./src/program.c -o ./obj/program.o -I ./include
+main.o : ./src/main.c
+	$(CC) $(CFLAGS) ./src/main.c -o ./obj/type.o -I ./include
 
 run :
 	./bin/$(EXEC)

@@ -1,6 +1,12 @@
 #include <stdio.h>
+<<<<<<< HEAD:Exo5 (Calcul matriciel)/matrix.c
+#include "type.h"
+#include "matrix.h"
+
+=======
 #include <type.h>
 #include <matrix.h>
+>>>>>>> fc5aa698a442bc24e507be2be81b2cb4ab50995e:Exo5 (Calcul matriciel)/src/matrix.c
 
 //------------ Fonction pour calculer la transposee d'une matrice ------------------------
 matrice* Transposer(matrice mat){
@@ -11,6 +17,8 @@ matrice* Transposer(matrice mat){
     for(int i=0; i<l; i++)
         for(int j=0; j<c; j++)
             A->tab[j][i] = mat.tab[i][j];
+
+    return A;
 }
 
 
@@ -83,4 +91,5 @@ matrice* Multiplier(matrice matA, matrice matB){
                 A->tab[i][j] += (matA.tab[i][k] * matB.tab[k][j]); 
         }
     }
+    return A;
 }
