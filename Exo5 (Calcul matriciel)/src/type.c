@@ -43,7 +43,7 @@ matrice* Generer(int lignes, int colonnes){
 //---------- Fonction pour generer une matrice a partir d'un fichier -------------------
 matrice* Charger(char *fichier, int lignes, int colonnes){
     matrice* mat;
-    FILE *in = fopen(fichier, 'r');
+    FILE *in = fopen(fichier, "r");
 
     mat->nb_lignes = lignes;
     mat->nb_colonnes = colonnes;
@@ -58,7 +58,7 @@ matrice* Charger(char *fichier, int lignes, int colonnes){
 
     for(int i=0; i<lignes; i++){
         for(int j=0; j<colonnes; j++){
-            fscanf(in, " %f", mat->tab[i][j]);
+            fscanf(in, " %f", &mat->tab[i][j]);
         }
     }
 
