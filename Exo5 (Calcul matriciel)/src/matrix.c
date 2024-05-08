@@ -1,7 +1,12 @@
 #include <stdio.h>
+<<<<<<< HEAD:Exo5 (Calcul matriciel)/matrix.c
 #include "type.h"
 #include "matrix.h"
 
+=======
+#include <type.h>
+#include <matrix.h>
+>>>>>>> fc5aa698a442bc24e507be2be81b2cb4ab50995e:Exo5 (Calcul matriciel)/src/matrix.c
 
 //------------ Fonction pour calculer la transposee d'une matrice ------------------------
 matrice* Transposer(matrice mat){
