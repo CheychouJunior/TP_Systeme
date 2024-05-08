@@ -7,7 +7,7 @@
 
 //---------- Fonction pour la creation d'une matrice ------------------------
 matrice* Creer(int lignes, int colonnes, float **tab){
-    matrice* mat;
+    matrice* mat = (matrice*)malloc(sizeof(matrice));
 
     mat->nb_lignes = lignes;
     mat->nb_colonnes = colonnes;
@@ -19,14 +19,13 @@ matrice* Creer(int lignes, int colonnes, float **tab){
 
 //---------- Fonction pour generer une matrice avec les valeurs aleatoires --------------------
 matrice* Generer(int lignes, int colonnes){
-    matrice* mat;
+    matrice* mat = (matrice*)malloc(sizeof(matrice));
     srand(time(0));
 
     mat->nb_lignes = lignes;
     mat->nb_colonnes = colonnes;
 
     // Allocation memoire de la matrice
-    mat->tab = (float **)malloc(lignes * sizeof(float*));
     for(int i=0; i<lignes; i++)
         mat->tab[i] = (float *)malloc(colonnes * sizeof(float));
     
@@ -42,8 +41,8 @@ matrice* Generer(int lignes, int colonnes){
 
 //---------- Fonction pour generer une matrice a partir d'un fichier -------------------
 matrice* Charger(char *fichier, int lignes, int colonnes){
-    matrice* mat;
-    FILE *in = fopen(fichier, 'r');
+    matrice* mat = (matrice*)malloc(sizeof(matrice));
+    FILE *in = fopen(fichier, "r");
 
     mat->nb_lignes = lignes;
     mat->nb_colonnes = colonnes;
@@ -52,13 +51,12 @@ matrice* Charger(char *fichier, int lignes, int colonnes){
         return NULL;
 
     // Allocation memoire de la matrice
-    mat->tab = (float **)malloc(lignes * sizeof(float*));
     for(int i=0; i<lignes; i++)
         mat->tab[i] = (float *)malloc(colonnes * sizeof(float));
 
     for(int i=0; i<lignes; i++){
         for(int j=0; j<colonnes; j++){
-            fscanf(in, " %f", mat->tab[i][j]);
+            fscanf(in, " %f", &mat->tab[i][j]);
         }
     }
 
