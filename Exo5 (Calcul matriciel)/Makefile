@@ -14,7 +14,7 @@ type.o : ./src/type.c
 matrix.o : ./src/matrix.c
 	$(CC) $(CFLAGS) ./src/matrix.c -o ./obj/matrix.o -I ./include
 
-program.o : ./src/main.c
+program.o : ./src/program.c
 	$(CC) $(CFLAGS) ./src/program.c -o ./obj/program.o -I ./include
 
 run :
