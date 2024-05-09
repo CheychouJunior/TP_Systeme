@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "type.h"
+#include <type.h>
 
 #define MAX 100 // Le plus grand nombre qui pourra etre genere aleatoirement
 

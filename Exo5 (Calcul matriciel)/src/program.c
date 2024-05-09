@@ -64,7 +64,8 @@ matrice* func_charger(){
 	return mat;
 }
 
-int main(){
+int main(void)
+{
 	int choix, choix2;
 	
 	do{
