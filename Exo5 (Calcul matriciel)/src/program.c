@@ -3,7 +3,6 @@
 #include <type.h>
 #include <matrix.h>
 
-
 float **fillTab(int ligne, int colonne){
 	float** tab;
 
@@ -14,16 +13,60 @@ float **fillTab(int ligne, int colonne){
 	for(int i=0; i<ligne; i++){
 		for(int j=0; j<colonne; j++){
 			printf("(%d, %d) : ", i+1, j+1);
-			scanf(" %f", tab[i][j]);
+			scanf(" %f", &tab[i][j]);
 		}
 	}
 
 	return tab;
 }
 
-int main(int argc, char* argv[]){
-	int choix, choix2, ligne, colonne;
+matrice* func_Generer(){
+	int ligne, colonne;
+
+	printf("Entrer le nombre de ligne de la matrice : ");
+	scanf("%d",&ligne);
+	printf("Entrer le nombre de colonnes de la matrice: ");
+	scanf("%d", &colonne);
+
+	matrice* mat = Creer(ligne, colonne, fillTab(ligne, colonne));
+
+	return mat;
+}
+
+matrice* func_creer(){
+	int ligne, colonne;
+
+	printf("Entrer le nombre de ligne de la matrice : ");
+	scanf("%d",&ligne);
+	printf("Entrer le nombre de colonnes de la matrice: ");
+	scanf("%d", &colonne);
+
+	matrice* mat = Creer(ligne, colonne, fillTab(ligne, colonne));
+	
+	return mat;
+}
+
+matrice* func_charger(){
+	int ligne, colonne;
 	char fichier[25];
+
+	printf("Entrer le nombre de ligne de la matrice : ");
+	scanf("%d",&ligne);
+	printf("Entrer le nombre de colonnes de la matrice: ");
+	scanf("%d", &colonne);
+	printf("Entrer le nom du fichier a lire : ");
+	scanf("%s", fichier);
+
+	matrice* mat = Charger(fichier, ligne, colonne);
+	if(mat == NULL)
+		printf("Le fichier %s n'existe pas\n", fichier);
+
+	return mat;
+}
+
+int main(){
+	int choix, choix2;
+	
 	do{
 		printf(" ----------------- MENU -------------------------------\n");
 		printf("| 0- QUITTER                                           |\n");
@@ -48,46 +91,33 @@ int main(int argc, char* argv[]){
 					scanf("%d",&choix2);
 					switch(choix2){
 						case 0: break;
-						case 1: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
+						case 1: matrice* mat1 = func_creer();
+								Afficher(*mat1);
 
-								matrice* mat = Creer(ligne, colonne, fillTab(ligne, colonne));
-								Afficher(*mat);
-
-								matrice* Tmat = Transposer(*mat);
+								matrice* Tmat1 = Transposer(*mat1);
 								printf("\nLa transpose de cette matrice est...\n");
-								Afficher(*Tmat);
+								Afficher(*Tmat1);
+								free(mat1);
+								free(Tmat1);
 								break;
-						case 2: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								matrice* mat = Generer(ligne, colonne);
-								Afficher(*mat);
-
-								matrice* Tmat = Transposer(*mat);
+						case 2:	matrice* mat2 = func_Generer();
+								Afficher(*mat2);
+								matrice* Tmat2 = Transposer(*mat2);
 								printf("\nLa transpose de cette matrice est...\n");
-								Afficher(*Tmat);
+								Afficher(*Tmat2);
+								free(mat2);
+								free(Tmat2);
 								break;
-						case 3: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-								printf("Entrer le nom du fichier a lire : ");
-								scanf("%s", fichier);
-
-								matrice* mat = Charger(fichier, ligne, colonne);
-								if(mat == NULL){
-									printf("Le fichier %s n'existe pas\n", fichier);
+						case 3: matrice* mat3 = func_charger();
+								if(mat3 == NULL)
 									break;
-								}
-								Afficher(*mat);
-								matrice* Tmat = Transposer(*mat);
+								
+								Afficher(*mat3);
+								matrice* Tmat3 = Transposer(*mat3);
 								printf("\nLa transpose de cette matrice est...\n");
-								Afficher(*Tmat);
+								Afficher(*Tmat3);
+								free(mat3);
+								free(Tmat3);
 								break;
 					}
 					break;
@@ -102,81 +132,63 @@ int main(int argc, char* argv[]){
 					scanf("%d",&choix2);
 					switch(choix2){
 						case 0: break;
-						case 1: printf("Entrer le nombre de ligne de la matrice: ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								printf("Matrice A\n");
-								matrice* matA = Creer(ligne, colonne, fillTab(ligne, colonne));
-								Afficher(*matA);
+						case 1: printf("Matrice A\n");
+								matrice* mat1A = func_creer();
+								Afficher(*mat1A);
 
 								printf("Matrice B\n");
-								matrice* matB = Creer(ligne, colonne, fillTab(ligne, colonne));
-								Afficher(*matB);
+								matrice* mat1B = func_creer();
+								Afficher(*mat1B);
 
-								matrice* somme = Additionner(*matA, *matB);
+								matrice* somme1 = Additionner(*mat1A, *mat1B);
 
-								if(somme != NULL){
+								if(somme1 != NULL){
 									printf("\nLa somme de ces deux matrices est...\n");
-									Afficher(*somme);
+									Afficher(*somme1);
 								}else
 									printf("Impossible d'effectuer l'addition de ces deux matrices");
-								
+								free(mat1A);
+								free(mat1B);
 								break;
-						case 2: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								printf("Matrice A\n");
-								matrice* matA = Generer(ligne, colonne);
-								Afficher(*matA);
+						case 2: printf("Matrice A\n");
+								matrice* mat2A = func_Generer();
+								Afficher(*mat2A);
 
 								printf("Matrice B\n");
-								matrice* matB = Generer(ligne, colonne);
-								Afficher(*matB);
-								matrice* somme = Additionner(*matA, *matB);
-								if(somme != NULL){
+								matrice* mat2B = func_Generer();
+								Afficher(*mat2B);
+
+								matrice* somme2 = Additionner(*mat2A, *mat2B);
+								if(somme2 != NULL){
 									printf("\nLa somme de ces deux matrices est...\n");
-									Afficher(*somme);
+									Afficher(*somme2);
 								}else
 									printf("Impossible d'effectuer l'addition de ces deux matrices");
+								free(mat2A);
+								free(mat2B);
 								break;
-						case 3: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								printf("Entrer le nom du fichier contenant la matrice A : ");
-								scanf("%s", fichier);
-								matrice* matA = Charger(fichier, ligne, colonne);
-								if(matA == NULL){
-									printf("Le fichier %s n'existe pas\n", fichier);
+						case 3: printf("Matrice A\n");
+								matrice* mat3A = func_charger();
+								if(mat3A == NULL)
 									break;
-								}
 
-								printf("Matrice A\n");
-								Afficher(*matA);
-
-								printf("Entrer le nom du fichier contenant la matrice B : ");
-								scanf("%s", fichier);
-								matrice* matB = Charger(fichier, ligne, colonne);
-								if(matB == NULL){
-									printf("Le fichier %s n'existe pas\n", fichier);
-									break;
-								}
+								Afficher(*mat3A);
 
 								printf("Matrice B\n");
-								Afficher(*matB);
+								matrice* mat3B = func_charger();
+								if(mat3B == NULL)
+									break;
 
-								matrice* somme = Additionner(*matA, *matB);
-								if(somme != NULL){
+								Afficher(*mat3B);
+
+								matrice* somme3 = Additionner(*mat3A, *mat3B);
+								if(somme3 != NULL){
 									printf("\nLa somme de ces deux matrices est...\n");
-									Afficher(*somme);
+									Afficher(*somme3);
 								}else
 									printf("Impossible d'effectuer l'addition de ces deux matrices");
-								break;
+								free(mat3A);
+								free(mat3B);
 								break;
 					}
 					break;
@@ -191,81 +203,63 @@ int main(int argc, char* argv[]){
 					scanf("%d",&choix2);
 					switch(choix2){
 						case 0: break;
-						case 1: printf("Entrer le nombre de ligne de la matrice: ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								printf("Matrice A\n");
-								matrice* matA = Creer(ligne, colonne, fillTab(ligne, colonne));
-								Afficher(*matA);
+						case 1: printf("Matrice A\n");
+								matrice* mat1A = func_creer();
+								Afficher(*mat1A);
 
 								printf("Matrice B\n");
-								matrice* matB = Creer(ligne, colonne, fillTab(ligne, colonne));
-								Afficher(*matB);
+								matrice* mat1B = func_creer();
+								Afficher(*mat1B);
 
-								matrice* diff = Soustraire(*matA, *matB);
+								matrice* diff1 = Soustraire(*mat1A, *mat1B);
 
-								if(diff != NULL){
+								if(diff1 != NULL){
 									printf("\nLa difference de ces deux matrices est...\n");
-									Afficher(*diff);
+									Afficher(*diff1);
 								}else
 									printf("Impossible d'effectuer la soustraction de ces deux matrices");
-								
+								free(mat1A);
+								free(mat1B);
 								break;
-						case 2: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								printf("Matrice A\n");
-								matrice* matA = Generer(ligne, colonne);
-								Afficher(*matA);
+						case 2: printf("Matrice A\n");
+								matrice* mat2A = func_Generer();
+								Afficher(*mat2A);
 
 								printf("Matrice B\n");
-								matrice* matB = Generer(ligne, colonne);
-								Afficher(*matB);
+								matrice* mat2B = func_Generer();
+								Afficher(*mat2B);
 
-								matrice* diff = Soustraire(*matA, *matB);
-								if(diff != NULL){
+								matrice* diff2 = Soustraire(*mat2A, *mat2B);
+								if(diff2 != NULL){
 									printf("\nLa difference de ces deux matrices est...\n");
-									Afficher(*diff);
+									Afficher(*diff2);
 								}else
 									printf("Impossible d'effectuer la soustraction de ces deux matrices");
+								free(mat2A);
+								free(mat2B);
 								break;
-						case 3: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								printf("Entrer le nom du fichier contenant la matrice A : ");
-								scanf("%s", fichier);
-								matrice* matA = Charger(fichier, ligne, colonne);
-								if(matA == NULL){
-									printf("Le fichier %s n'existe pas\n", fichier);
+						case 3: printf("Matrice A\n");
+								matrice* mat3A = func_charger();
+								if(mat3A == NULL)
 									break;
-								}
-
-								printf("Matrice A\n");
-								Afficher(*matA);
-
-								printf("Entrer le nom du fichier contenant la matrice B : ");
-								scanf("%s", fichier);
-								matrice* matB = Charger(fichier, ligne, colonne);
-								if(matB == NULL){
-									printf("Le fichier %s n'existe pas\n", fichier);
-									break;
-								}
+								
+								Afficher(*mat3A);
 
 								printf("Matrice B\n");
-								Afficher(*matB);
+								matrice* mat3B = func_charger();
+								if(mat3B == NULL)
+									break;
 								
-								matrice* diff = Soustraire(*matA, *matB);
-								if(diff != NULL){
+								Afficher(*mat3B);
+								
+								matrice* diff3 = Soustraire(*mat3A, *mat3B);
+								if(diff3 != NULL){
 									printf("\nLa difference de ces deux matrices est...\n");
-									Afficher(*diff);
+									Afficher(*diff3);
 								}else
 									printf("Impossible d'effectuer la soustraction de ces deux matrices");
+								free(mat3A);
+								free(mat3B);
 								break;
 					}
 					break;
@@ -281,56 +275,44 @@ int main(int argc, char* argv[]){
 					float k;
 					switch(choix2){
 						case 0: break;
-						case 1: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								matrice* mat = Creer(ligne, colonne, fillTab(ligne, colonne));
-								Afficher(*mat);
+						case 1: matrice* mat1 = func_creer();
+								Afficher(*mat1);
 
 								printf("Entrer la valeur du scalaire : ");
 								scanf(" %f", &k);
 
-								matrice* Smat = Multiplier_S(*mat, k);
+								matrice* Smat1 = Multiplier_S(*mat1, k);
 								printf("\nLa multiplication de cette matrice par %.2f est...\n", k);
-								Afficher(*Smat);
+								Afficher(*Smat1);
+								free(mat1);
+								free(Smat1);
 								break;
-						case 2: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-
-								matrice* mat = Generer(ligne, colonne);
-								Afficher(*mat);
+						case 2: matrice* mat2 = func_Generer();
+								Afficher(*mat2);
 
 								printf("Entrer la valeur du scalaire : ");
 								scanf(" %f", &k);
 
-								matrice* Smat = Multiplier_S(*mat, k);
+								matrice* Smat2 = Multiplier_S(*mat2, k);
 								printf("\nLa transpose de cette matrice par %.2f est...\n", k);
-								Afficher(*Smat);
+								Afficher(*Smat2);
+								free(mat2);
+								free(Smat2);
 								break;
-						case 3: printf("Entrer le nombre de ligne de la matrice : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice: ");
-								scanf("%d", &colonne);
-								printf("Entrer le nom du fichier a lire : ");
-								scanf("%s", fichier);
-
-								matrice* mat = Charger(fichier, ligne, colonne);
-								if(mat == NULL){
-									printf("Le fichier %s n'existe pas\n", fichier);
+						case 3: matrice* mat3 = func_charger();
+								if(mat3 == NULL)
 									break;
-								}
-								Afficher(*mat);
+								
+								Afficher(*mat3);
 
 								printf("Entrer la valeur du scalaire : ");
 								scanf(" %f", &k);
 
-								matrice* Smat = Multiplier_S(*mat, k);
+								matrice* Smat3 = Multiplier_S(*mat3, k);
 								printf("\nLa transpose de cette matrice par %.2f est...\n", k);
-								Afficher(*Smat);
+								Afficher(*Smat3);
+								free(mat3);
+								free(Smat3);
 								break;
 					}
 					break;
@@ -345,97 +327,63 @@ int main(int argc, char* argv[]){
 					scanf("%d",&choix2);
 					switch(choix2){
 						case 0: break;
-						case 1: printf("Entrer le nombre de ligne de la matrice A: ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice A: ");
-								scanf("%d", &colonne);
-
-								printf("Matrice A\n");
-								matrice* matA = Creer(ligne, colonne, fillTab(ligne, colonne));
-								Afficher(*matA);
-
-								printf("Entrer le nombre de ligne de la matrice B: ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice B: ");
-								scanf("%d", &colonne);
+						case 1: printf("Matrice A\n");
+								matrice* mat1A = func_creer();
+								Afficher(*mat1A);
 
 								printf("Matrice B\n");
-								matrice* matB = Creer(ligne, colonne, fillTab(ligne, colonne));
-								Afficher(*matB);
+								matrice* mat1B = func_creer();
+								Afficher(*mat1B);
 
-								matrice* mult = Multiplier(*matA, *matB);
+								matrice* mult1 = Multiplier(*mat1A, *mat1B);
 
-								if(mult != NULL){
+								if(mult1 != NULL){
 									printf("\nLe produit de ces deux matrices est...\n");
-									Afficher(*mult);
+									Afficher(*mult1);
 								}else
 									printf("Impossible d'effectuer la multiplication de ces deux matrices");
+								free(mat1A);
+								free(mat1B);
+								break;
+						case 2: printf("Matrice A\n");
+								matrice* mat2A = func_Generer();
+								Afficher(*mat2A);
+
+								printf("Matrice B\n");
+								matrice* mat2B = func_Generer();
+								Afficher(*mat2B);
+
+								matrice* mult2 = Multiplier(*mat2A, *mat2B);
+								if(mult2 != NULL){
+									printf("\nLe produit de ces deux matrices est...\n");
+									Afficher(*mult2);
+								}else
+									printf("Impossible d'effectuer la multiplication de ces deux matrices");
+								free(mat2A);
+								free(mat2B);
+								break;
+						case 3: printf("Matrice A\n");
+								matrice* mat3A = func_charger();
+								if(mat3A == NULL)
+									break;
 								
-								break;
-						case 2: printf("Entrer le nombre de ligne de la matrice A: ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice A: ");
-								scanf("%d", &colonne);
-
-								printf("Matrice A\n");
-								matrice* matA = Generer(ligne, colonne);
-								Afficher(*matA);
-
-								printf("Entrer le nombre de ligne de la matrice B: ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice B: ");
-								scanf("%d", &colonne);
+								Afficher(*mat3A);
 
 								printf("Matrice B\n");
-								matrice* matB = Generer(ligne, colonne);
-								Afficher(*matB);
+								matrice* mat3B = func_charger();
+								if(mat3B == NULL)
+									break;
+								
+								Afficher(*mat3B);
 
-								matrice* mult = Multiplier(*matA, *matB);
-								if(mult != NULL){
+								matrice* mult3 = Multiplier(*mat3A, *mat3B);
+								if(mult3 != NULL){
 									printf("\nLe produit de ces deux matrices est...\n");
-									Afficher(*mult);
+									Afficher(*mult3);
 								}else
 									printf("Impossible d'effectuer la multiplication de ces deux matrices");
-								break;
-						case 3: printf("Entrer le nombre de ligne de la matrice A : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice A : ");
-								scanf("%d", &colonne);
-
-								printf("Entrer le nom du fichier contenant la matrice A : ");
-								scanf("%s", fichier);
-								matrice* matA = Charger(fichier, ligne, colonne);
-								if(matA == NULL){
-									printf("Le fichier %s n'existe pas\n", fichier);
-									break;
-								}
-
-								printf("Matrice A\n");
-								Afficher(*matA);
-
-								printf("Entrer le nombre de ligne de la matrice B : ");
-								scanf("%d",&ligne);
-								printf("Entrer le nombre de colonnes de la matrice B : ");
-								scanf("%d", &colonne);
-
-								printf("Entrer le nom du fichier contenant la matrice B : ");
-								scanf("%s", fichier);
-								matrice* matB = Charger(fichier, ligne, colonne);
-								if(matB == NULL){
-									printf("Le fichier %s n'existe pas\n", fichier);
-									break;
-								}
-
-								printf("Matrice B\n");
-								Afficher(*matB);
-
-								matrice* mult = Multiplier(*matA, *matB);
-								if(mult != NULL){
-									printf("\nLe produit de ces deux matrices est...\n");
-									Afficher(*mult);
-								}else
-									printf("Impossible d'effectuer la multiplication de ces deux matrices");
-
+								free(mat3A);
+								free(mat3B);
 								break;
 					}
 					break;
